@@ -1,0 +1,6 @@
+github:
+  repo: "https://github.com/colathro/garden.git"
+
+pi:
+  install-dir: "home/pi/"
+  install-folder: "garden"
