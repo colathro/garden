@@ -4,6 +4,13 @@ this folder is intended to bootstrap your pi and is the only thing needed to be 
 
 sftp this folder in and setup the configs targetting your github repo.
 
-install git on the pi:
+run the following to configure the pi with the neccesary dependencies:
+
 sudo apt install git
 sudo apt-get install python3-pip
+
+git clone your repo in your install_dir, this should make install_folder.
+
+install dependencies:
+
+pip3 install -r requirements.txt
