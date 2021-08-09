@@ -1,29 +1,48 @@
 import yaml
 import os
+import git
 
 global config_file
-config_file = 'config.yaml'
+config_file = "config.yaml"
+
 
 def main():
     with open(config_file) as file:
         config_bag = yaml.load(file, Loader=yaml.FullLoader)
+
+    if(is_installed(config_bag)):
+        update_code(config_bag)
+    else:
+        install_code(config_bag)
     return 0
 
-def is_installed(config_bag):
-    try:
-        home = config_bag['pi']['home']
-        folder = config_bag['pi']['folder']
-        install_path = os.path.join(home, folder)
-        exists = os.path.exists(install_path)
 
-        if (exists):
-            with open('version.txt', 'r') as file:
-                version = file.read()
-                return True
-        else:
-            return False
-    except e:
-        return
+def is_installed(config_bag):
+    install_path = get_install_directory(config_bag)
+    return os.path.exists(install_path)
+
+
+def get_install_directory(config_bag):
+    home = get_home_directory(config_bag)
+    folder = config_bag["pi"]["install-folder"]
+    return os.path.join(home, folder)
+
+
+def get_home_directory(config_bag):
+    return config_bag["pi"]["install-dir"]
+
+
+def update_code(config_bag):
+    repo = git.Repo(get_install_directory(config_bag))
+    origin = repo.remotes.origin
+    origin.pull()
+
+
+def install_code(config_bag):
+    install_directory = get_install_directory(config_bag)
+    os.makedirs(install_directory, exist_ok=True)
+    repo = git.Git(get_home_directory(config_bag))
+    repo.clone(config_bag['github']['repo'])
 
 
 if __name__ == "__main__":

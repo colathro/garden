@@ -1,2 +1,2 @@
 # garden
-Some stuff for my gadren.
+Some stuff for my garden.
