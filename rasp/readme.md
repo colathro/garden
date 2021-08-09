@@ -6,3 +6,4 @@ sftp this folder in and setup the configs targetting your github repo.
 
 install git on the pi:
 sudo apt install git
+sudo apt-get install python3-pip

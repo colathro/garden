@@ -10,6 +10,7 @@ def main():
     with open(config_file) as file:
         config_bag = yaml.load(file, Loader=yaml.FullLoader)
 
+    os.chdir('/')
     if(is_installed(config_bag)):
         update_code(config_bag)
     else:
