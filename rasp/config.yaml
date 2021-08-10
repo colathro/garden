@@ -2,5 +2,9 @@ github:
   repo: "https://github.com/colathro/garden.git"
 
 pi:
-  install-dir: "home/pi/"
-  install-folder: "garden"
+  install_dir: "home/pi/"
+  install_folder: "garden"
+
+target:
+  target_folder: "peep"
+  target_entry: "serve.py"
