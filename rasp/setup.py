@@ -71,14 +71,13 @@ def update_rc_local(config_bag):
     os.chdir('/')
     with open('/etc/rc.local', 'w') as rc_local:
         with open(get_new_rc_local(config_bag), 'r') as new_rc_local:
-            content = new_rc_local.readlines()
-            for line in content:
-                line.replace('{{install_dir}}',
-                             get_install_directory(config_bag))
-                line.replace('{{target_folder}}',
-                             get_target_folder(config_bag))
-                line.replace('{{target_entry}}',
-                             get_target_entry(config_bag))
+            content = new_rc_local.read()
+            content.replace('{{install_dir}}',
+                            get_install_directory(config_bag))
+            content.replace('{{target_folder}}',
+                            get_target_folder(config_bag))
+            content.replace('{{target_entry}}',
+                            get_target_entry(config_bag))
         rc_local.writelines(content)
 
 
