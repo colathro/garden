@@ -78,7 +78,7 @@ def update_rc_local(config_bag):
                                       get_target_folder(config_bag))
             content = content.replace('{target_entry}',
                                       get_target_entry(config_bag))
-        rc_local.writelines(content)
+        rc_local.write(content)
 
 
 if __name__ == "__main__":
