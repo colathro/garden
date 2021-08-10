@@ -6,6 +6,10 @@ import subprocess
 global config_file
 config_file = "config.yaml"
 
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 
 def main():
     with open(config_file) as file:
