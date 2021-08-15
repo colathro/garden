@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import render_template
+import os
+import time
 
 app = Flask(__name__)
 
@@ -14,7 +16,8 @@ def hello():
 def hello():
     with open("/tmp/rc.local.log", "r") as logfile:
         message = logfile.read()
-        return render_template('logs.html', message=message)
+        return render_template('logs.html', message=message,
+                               time=time.ctime(os.path.getmtime("/tmp/rc.local.log")))
 
 
 if __name__ == "__main__":
