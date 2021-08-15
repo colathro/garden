@@ -13,7 +13,7 @@ def hello():
 
 
 @app.route("/startuplogs")
-def hello():
+def startuplogs():
     with open("/tmp/rc.local.log", "r") as logfile:
         message = logfile.read()
         return render_template('logs.html', message=message,
