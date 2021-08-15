@@ -39,14 +39,14 @@ def log_stats(db):
         try:
             for i in range(4):
                 # Read the specified ADC channel using the previously set gain value.
-                voltage = adc.read_adc(i, gain=GAIN)
+                voltage = adc.read_adc(i, gain=1)
                 reading = water_level(sensor=i, voltage=voltage,
                                       timestamp=int(time.time()))
                 db.session.add(reading)
             db.session.commit()
             print("Successfully logged water level.")
-        except(e):
-            print(e, "Failed to log water level.")
+        except:
+            print("Failed to log water level.")
         time.sleep(60)
 
 
