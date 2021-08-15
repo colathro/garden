@@ -47,7 +47,7 @@ def log_stats(db):
             print("Successfully logged water level.")
         except:
             print("Failed to log water level.")
-        time.sleep(60)
+        time.sleep(600)
 
 
 @app.route("/")
