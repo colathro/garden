@@ -5,7 +5,6 @@ import time
 import threading
 import Adafruit_ADS1x15
 
-adc = Adafruit_ADS1x15.ADS1115()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///garden.db'
 
@@ -37,6 +36,7 @@ db.create_all()
 def log_stats(db):
     while True:
         try:
+            adc = Adafruit_ADS1x15.ADS1115()
             for i in range(4):
                 # Read the specified ADC channel using the previously set gain value.
                 voltage = adc.read_adc(i, gain=1)
