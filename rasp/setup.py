@@ -6,9 +6,7 @@ import subprocess
 global config_file
 config_file = "config.yaml"
 
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
+os.chdir("/home/pi/")
 
 
 def main():
