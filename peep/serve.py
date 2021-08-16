@@ -1,11 +1,11 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 import time
 import threading
-import Adafruit_ADS1x15
+#import Adafruit_ADS1x15
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///garden.db'
 
 db = SQLAlchemy(app)
@@ -36,10 +36,10 @@ db.create_all()
 def log_stats(db):
     while True:
         try:
-            adc = Adafruit_ADS1x15.ADS1115()
+            #adc = Adafruit_ADS1x15.ADS1115()
             for i in range(4):
                 # Read the specified ADC channel using the previously set gain value.
-                voltage = adc.read_adc(i, gain=1)
+                voltage = 23000  # adc.read_adc(i, gain=1)
                 reading = water_level(sensor=i, voltage=voltage,
                                       timestamp=int(time.time()))
                 db.session.add(reading)
@@ -50,12 +50,22 @@ def log_stats(db):
         time.sleep(600)
 
 
-@app.route("/")
-def hello():
+@app.route("/", defaults={'path': ''})
+def serve(path):
+    return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.route("/api/water/all")
+def water_all():
     return jsonify([i.serialize() for i in water_level.query.all()])
 
 
-@app.route("/startuplogs")
+@app.route("/api/water/week")
+def water_week():
+    return jsonify([i.serialize() for i in water_level.query.all()])
+
+
+@app.route("/api/startuplogs")
 def startuplogs():
     with open("/tmp/rc.local.log", "r") as logfile:
         message = logfile.read()
