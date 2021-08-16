@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import time
 import threading
-#import Adafruit_ADS1x15
+import Adafruit_ADS1x15
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///garden.db'
@@ -36,10 +36,10 @@ db.create_all()
 def log_stats(db):
     while True:
         try:
-            #adc = Adafruit_ADS1x15.ADS1115()
+            adc = Adafruit_ADS1x15.ADS1115()
             for i in range(4):
                 # Read the specified ADC channel using the previously set gain value.
-                voltage = 23000  # adc.read_adc(i, gain=1)
+                voltage = adc.read_adc(i, gain=1)
                 reading = water_level(sensor=i, voltage=voltage,
                                       timestamp=int(time.time()))
                 db.session.add(reading)
