@@ -77,17 +77,17 @@ def log_stats(db):
                 count = count + 1
                 humidity, temp = Adafruit_DHT.read(Adafruit_DHT.DHT11, 26)
                 if (humidity == None or temp == None):
-                    good_readings = false
+                    good_readings = False
                     time.sleep(2)
                 else:
-                    good_readings = true
+                    good_readings = True
                 if (count >= 10):
                     raise Exception("not good")
             reading = temphumidity(temp, humidity, int(time.time()))
             db.session.add(reading)
             db.session.commit()
             print("Successfully logged water level.")
-        except:
+        except Exception as e:
             print("Failed to log water level.")
         time.sleep(600)
 
