@@ -4,6 +4,7 @@ import os
 import time
 import threading
 import Adafruit_ADS1x15
+import Adafruit_DHT
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///garden.db'
@@ -30,6 +31,25 @@ class water_level(db.Model):
         }
 
 
+class temphumidity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    temp = db.Column(db.Integer)
+    humidity = db.Column(db.Integer)
+    timestamp = db.Column(db.Integer)
+
+    def __init__(self, temp, humidity, timestamp):
+        self.temp = temp
+        self.humidity = humidity
+        self.timestamp = timestamp
+
+    def serialize(self):
+        return {
+            "temp": self.temp,
+            "humidity": self.humidity,
+            "timestamp": self.timestamp
+        }
+
+
 db.create_all()
 
 
@@ -43,6 +63,29 @@ def log_stats(db):
                 reading = water_level(sensor=i, voltage=voltage,
                                       timestamp=int(time.time()))
                 db.session.add(reading)
+            db.session.commit()
+            print("Successfully logged water level.")
+        except:
+            print("Failed to log water level.")
+
+        try:
+            humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+            good_readings = False
+            count = 0
+            temp = None
+            humidity = None
+            while (not good_readings):
+                count = count + 1
+                humidity, temp = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+                if (humidity == None or temp == None):
+                    good_readings = false
+                    time.sleep(2)
+                else:
+                    good_readings = true
+                if (count >= 10):
+                    raise Exception("not good")
+            reading = temphumidity(temp, humidity, int(time.time()))
+            db.session.add(reading)
             db.session.commit()
             print("Successfully logged water level.")
         except:
