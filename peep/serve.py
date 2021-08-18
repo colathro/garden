@@ -69,14 +69,13 @@ def log_stats(db):
             print("Failed to log water level.")
 
         try:
-            humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
             good_readings = False
             count = 0
             temp = None
             humidity = None
             while (not good_readings):
                 count = count + 1
-                humidity, temp = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+                humidity, temp = Adafruit_DHT.read(Adafruit_DHT.DHT11, 26)
                 if (humidity == None or temp == None):
                     good_readings = false
                     time.sleep(2)
