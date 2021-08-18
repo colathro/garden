@@ -108,6 +108,11 @@ def water_week():
     return jsonify([i.serialize() for i in water_level.query.all()])
 
 
+@app.route("/api/temphumid/all")
+def temphumidall():
+    return jsonify([i.serialize() for i in temphumidity.query.all()])
+
+
 @app.route("/api/startuplogs")
 def startuplogs():
     with open("/tmp/rc.local.log", "r") as logfile:
