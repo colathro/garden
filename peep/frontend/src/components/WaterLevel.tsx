@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import internal from 'stream';
 
 const summarizeData = (data: WaterLevel[]) => {
     let output : HourSummary[] = [];
@@ -88,7 +87,7 @@ type HourSummary = {
     timestamp: Date;
 }
 
-const Example = () => {
+const WaterLevelChart = () => {
     const [data, setData] = useState<HourSummary[]>();
     useEffect(() => {
         fetch('api/water/week').then(async (response) => {
@@ -104,30 +103,22 @@ const Example = () => {
           });
     }, [])
     return (
-      <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          width={500}
-          height={300}
+          width={800}
+          height={400}
           data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="timestamp" />
+          <XAxis dataKey="timestamp"/>
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="sensor0" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="sensor1" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="sensor2" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="sensor3" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="sensor0" stroke="#0FD65B"  />
+          <Line type="monotone" dataKey="sensor1" stroke="#A90FD6"  />
+          <Line type="monotone" dataKey="sensor2" stroke="#D60F2A"  />
+          <Line type="monotone" dataKey="sensor3" stroke="#E27B1F"  />
         </LineChart>
-      </ResponsiveContainer>
     );
 }
 
-export default Example;
+export default WaterLevelChart;

@@ -1,9 +1,11 @@
-import Example from "./components/WaterLevel";
+import WaterLevelChart from "./components/WaterLevel";
+import TempHumidityChart from "./components/TempHumidity";
 
 function App() {
   return (
     <div className="app">
-        <Example/>
+        <WaterLevelChart/>
+        <TempHumidityChart/>
     </div>
   );
 }
