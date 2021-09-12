@@ -109,7 +109,7 @@ def water_week():
 
 @app.route("/api/temphumid/all")
 def temphumidall():
-    return jsonify([i.serialize() for i in temphumidity.query.all()])
+    return jsonify([i.serialize() for i in temphumidity.query.filter(temphumidity.timestamp > int(time.time()) - 604800)])
 
 
 @app.route("/api/startuplogs")
