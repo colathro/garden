@@ -104,7 +104,7 @@ def water_all():
 
 @app.route("/api/water/week")
 def water_week():
-    return jsonify([i.serialize() for i in water_level.query.filter(water_level.timestamp > int(time.time()) - 604800000)])
+    return jsonify([i.serialize() for i in water_level.query.filter(water_level.timestamp > int(time.time()) - 604800)])
 
 
 @app.route("/api/temphumid/all")
